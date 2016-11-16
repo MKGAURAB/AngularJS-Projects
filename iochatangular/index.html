@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="iochat">
+<head>
+    <meta charset="UTF-8">
+    <title>Gaurab's Chat Client</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-socket-io/socket.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+    <style>
+        body{
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div  class="container" ng-controller="Chatter as Chtr">
+        <div class="row"  id="userFormArea" ng-show="Chtr.shDiv">
+            <div class="col-mod-12" ng-controller="SubmitUserCtrl as subCtrl">
+                <form id="userForm" ng-submit="subCtrl.submitUser()">
+                    <div class="form-group">
+                        <label>Enter Username</label>
+                        <textarea ng-model="subCtrl.username" class="form-control" id="username"></textarea>
+                        <br/>
+                        <input type="submit" class="btn btn-primary" ng-click="Chtr.shDiv=!Chtr.shDiv" value="Log In"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" id="messageArea" ng-show="!Chtr.shDiv">
+            <div class="col-md-4" ng-controller="SubmitUserCtrl as subCtrl">
+                <div class="well">
+                    <h3>Online Users</h3>
+                    <ul class="list-group" id="users">
+                        <li class="list-group-item" ng-repeat="usrs in subCtrl.userNames track by $index">{{usrs}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8" ng-controller="SubmitMessages as sC">
+                <div class="chat" id="chat" ></div>
+                <form id="messageForm" ng-submit="sC.submitMessage()">
+                    <div class="form-group">
+                        <label>Enter Message</label>
+                        <textarea ng-model="sC.message" class="form-control" id="message"></textarea>
+                        <br/>
+                        <input type="submit" class="btn btn-primary" value="Send Message"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
